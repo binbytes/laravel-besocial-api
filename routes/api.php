@@ -27,6 +27,12 @@ Route::namespace('Api')
                     ->name('verification.verify');
                 Route::get('email/resend', 'Auth\VerificationController@resend')
                     ->name('verification.resend');
+
+                Route::get('posts', 'PostController@index');
+                Route::post('posts', 'PostController@store');
+
+                Route::get('posts/{id}/comments', 'CommentController@index');
+                Route::post('posts/{id}/comments', 'CommentController@store');
             });
     });
 
