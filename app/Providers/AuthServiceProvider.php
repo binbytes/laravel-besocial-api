@@ -26,8 +26,6 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-
-
         Passport::personalAccessClientId('1');
     }
 }

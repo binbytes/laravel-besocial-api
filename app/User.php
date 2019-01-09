@@ -36,4 +36,12 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Post::class);
     }
+
+    /**
+     * @return string
+     */
+    public function generateAccessToken()
+    {
+        return $this->createToken(config('app.name'))->accessToken;
+    }
 }

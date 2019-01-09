@@ -41,10 +41,8 @@ class LoginController extends Controller
      */
     public function authenticated(Request $request, User $user)
     {
-        $token = $user->createToken(config('app.name'))->accessToken;
-
         return response()->json([
-            'token' => $token
+            'token' => $user->generateAccessToken()
         ]);
     }
 
