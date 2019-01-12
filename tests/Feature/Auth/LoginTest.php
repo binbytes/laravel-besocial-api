@@ -48,12 +48,31 @@ class LoginTest extends TestCase
             'password' => bcrypt('secret'),
         ]);
 
-        $response = $this->postJson('/api/auth/login', [
+        $this->postJson('/api/auth/login', [
                 'email' => $user->email,
-                'password' => "secret"
+                'password' => "secret123"
             ])
-            ->assertOk()
-            ->assertSee('token');
+            ->assertStatus(422)
+            ->assertJsonValidationErrors([
+                'email'
+            ]);
+    }
+
+    /**
+     * @test
+     */
+    public function user_can_login_with_correct_credentials()
+    {
+        $user = factory(User::class)->create([
+            'password' => bcrypt('secret'),
+        ]);
+
+        $response = $this->postJson('/api/auth/login', [
+            'email' => $user->email,
+            'password' => "secret"
+        ])
+        ->assertOk()
+        ->assertSee('token');
 
         $this->getJson('/api/auth/user', [ 'Authorization' => 'Bearer '.$response->json('token') ])
             ->assertOk()

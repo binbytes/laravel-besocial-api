@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
+use Illuminate\Auth\Access\AuthorizationException;
 use Illuminate\Auth\Events\Verified;
 use Illuminate\Foundation\Auth\VerifiesEmails;
 use Illuminate\Http\Request;
@@ -46,6 +47,7 @@ class VerificationController extends Controller
      * @param \Illuminate\Http\Request $request
      *
      * @return \App\Http\Resources\UserResource
+     * @throws \Illuminate\Auth\Access\AuthorizationException
      */
     public function verify(Request $request)
     {
