@@ -12,6 +12,8 @@ class GeneratePassportRequiredClient extends Migration
      */
     public function up()
     {
+        Artisan::call('passport:install');
+
         Artisan::call('passport:client', [
             '--personal' => true,
             '-n' => true,
