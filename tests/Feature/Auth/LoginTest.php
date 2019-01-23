@@ -15,7 +15,7 @@ class LoginTest extends TestCase
         $this->postJson('/api/auth/login', [])
             ->assertStatus(422)
             ->assertJsonValidationErrors([
-                'email',
+                'username',
                 'password'
             ]);
     }
@@ -30,12 +30,12 @@ class LoginTest extends TestCase
         ]);
 
         $this->postJson('/api/auth/login', [
-                'email' => 'johndeo_123@gmail.com',
+                'username' => 'johndeo_123@gmail.com',
                 'password' => "123456"
             ])
             ->assertStatus(422)
             ->assertJsonValidationErrors([
-                'email'
+                'username'
             ]);
     }
 
@@ -49,12 +49,12 @@ class LoginTest extends TestCase
         ]);
 
         $this->postJson('/api/auth/login', [
-                'email' => $user->email,
+                'username' => $user->email,
                 'password' => "secret123"
             ])
             ->assertStatus(422)
             ->assertJsonValidationErrors([
-                'email'
+                'username'
             ]);
     }
 
@@ -68,7 +68,7 @@ class LoginTest extends TestCase
         ]);
 
         $response = $this->postJson('/api/auth/login', [
-            'email' => $user->email,
+            'username' => $user->email,
             'password' => "secret"
         ])
         ->assertOk()
