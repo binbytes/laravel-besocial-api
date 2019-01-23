@@ -16,6 +16,7 @@ class RegisterTest extends TestCase
             ->assertStatus(422)
             ->assertJsonValidationErrors([
                 'email',
+                'username',
                 'name',
                 'password'
             ]);
@@ -33,7 +34,8 @@ class RegisterTest extends TestCase
             ])
             ->assertStatus(422)
             ->assertJsonValidationErrors([
-                'email'
+                'email',
+                'username',
             ]);
     }
 
@@ -46,6 +48,7 @@ class RegisterTest extends TestCase
 
         $this->postJson('/api/auth/register', [
                 'name' => $user->name,
+                'username' => $user->username,
                 'email' => $user->email,
                 'password' => "secret"
             ])
