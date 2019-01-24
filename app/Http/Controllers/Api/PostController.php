@@ -13,27 +13,20 @@ use App\User;
 class PostController extends Controller
 {
     /**
+     * @param null $userId
+     *
      * @return \App\Http\Resources\PostResources
      */
-    public function index()
+    public function index($userId = null)
     {
         $posts = Post::with('author')
+            ->when($userId, function ($query) use($userId) {
+                return $query->whereUserId($userId);
+            })
             ->latest()
             ->paginate(20);
 
         return new PostResources($posts);
-    }
-
-    /**
-     * @param \App\User $user
-     *
-     * @return \App\Http\Resources\PostResources
-     */
-    public function userPosts(User $user)
-    {
-        $user->load('posts.author');
-
-        return new UserResource($user);
     }
 
     /**
