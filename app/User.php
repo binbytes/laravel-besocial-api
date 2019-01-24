@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Traits\CanFollow;
 use App\Traits\CanLike;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -10,7 +11,7 @@ use Laravel\Passport\HasApiTokens;
 
 class User extends Authenticatable implements MustVerifyEmail
 {
-    use Notifiable, HasApiTokens, CanLike;
+    use Notifiable, HasApiTokens, CanLike, CanFollow;
 
     /**
      * The attributes that are mass assignable.
