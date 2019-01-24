@@ -9,12 +9,21 @@ use App\User;
 class UserController extends Controller
 {
     /**
-     * @param \App\User $user
+     * @param $by 'id' or 'username'
+     * @param $val
      *
      * @return \App\Http\Resources\UserResource
      */
-    public function show(User $user)
+    public function show($by, $val)
     {
-        return new UserResource($user);
+        abort_unless(in_array($by, [
+            'id',
+            'username'
+        ]));
+
+        return new UserResource(
+            User::where($by, $val)
+                ->first()
+        );
     }
 }
