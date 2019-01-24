@@ -29,6 +29,7 @@ Route::namespace('Api')
                     ->name('verification.resend');
 
                 Route::get('posts', 'PostController@index');
+                Route::get('posts/user/{user}', 'PostController@userPosts');
                 Route::post('posts', 'PostController@store');
 
                 Route::get('posts/{id}/comments', 'CommentController@index');

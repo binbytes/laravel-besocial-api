@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\Api\PostRequest;
 use App\Http\Resources\PostResource;
 use App\Http\Resources\PostResources;
+use App\Http\Resources\UserResource;
 use App\Post;
 use App\Http\Controllers\Controller;
+use App\User;
 
 class PostController extends Controller
 {
@@ -16,11 +18,22 @@ class PostController extends Controller
     public function index()
     {
         $posts = Post::with('author')
-            ->withCount('comments')
             ->latest()
             ->paginate(20);
 
         return new PostResources($posts);
+    }
+
+    /**
+     * @param \App\User $user
+     *
+     * @return \App\Http\Resources\PostResources
+     */
+    public function userPosts(User $user)
+    {
+        $user->load('posts.author');
+
+        return new UserResource($user);
     }
 
     /**

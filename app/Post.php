@@ -17,6 +17,13 @@ class Post extends Model
     ];
 
     /**
+     * @var array
+     */
+    protected $withCount = [
+        'comments'
+    ];
+
+    /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany
      */
     public function comments()

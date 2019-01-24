@@ -6,6 +6,8 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class UserResource extends JsonResource
 {
+    public static $wrap = false;
+
     /**
      * Transform the resource into an array.
      *
@@ -22,6 +24,7 @@ class UserResource extends JsonResource
             'postsCount' => $this->posts()->count(),
             'followersCount' => $this->followers()->count(),
             'followingCount' => $this->followings()->count(),
+            'posts' => new PostResources($this->whenLoaded('posts'))
         ];
     }
 }
