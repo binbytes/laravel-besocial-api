@@ -33,6 +33,7 @@ Route::namespace('Api')
 
                 Route::get('posts/{id}/comments', 'CommentController@index');
                 Route::post('posts/{id}/comments', 'CommentController@store');
+                Route::post('posts/{id}/like', 'LikeController@store');
             });
     });
 

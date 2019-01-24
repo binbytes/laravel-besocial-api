@@ -2,10 +2,13 @@
 
 namespace App;
 
+use App\Traits\CanLike;
 use Illuminate\Database\Eloquent\Model;
 
 class Post extends Model
 {
+    use CanLike;
+
     /**
      * @var array
      */

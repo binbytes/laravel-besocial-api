@@ -19,6 +19,8 @@ class PostResource extends JsonResource
             'text' => $this->text,
             'author' => (new UserResource($this->author)),
             'totalComment' => $this->comments_count ?: 0,
+            'isLiked' => $request->user() ? $request->user()->hasLiked($this->resource) : false,
+            'likedCount' => $this->liker()->count(),
         ];
     }
 }
