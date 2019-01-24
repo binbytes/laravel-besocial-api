@@ -19,6 +19,7 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'username' => $this->username,
             'email' => $this->email,
+            'postsCount' => $this->posts()->count(),
             'followersCount' => $this->followers()->count(),
             'followingCount' => $this->followings()->count(),
         ];
