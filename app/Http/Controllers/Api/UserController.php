@@ -19,7 +19,7 @@ class UserController extends Controller
         abort_unless(in_array($by, [
             'id',
             'username'
-        ]));
+        ]), 404);
 
         return new UserResource(
             User::where($by, $val)

@@ -22,8 +22,8 @@ class UserResource extends JsonResource
             'postsCount' => $this->posts()->count(),
             'followersCount' => $this->followers()->count(),
             'followingCount' => $this->followings()->count(),
-            'isFollowing' => $request->user() == $this->id
-                ? null : ($request->user() && $request->user()->isFollowing($this->resource))
+            'isFollowing' => auth()->guest() || auth()->id() == $this->id
+                ? null : auth()->user()->isFollowing($this->resource)
         ];
     }
 }
