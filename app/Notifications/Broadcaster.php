@@ -29,8 +29,8 @@ trait Broadcaster
      */
     public function via($notifiable)
     {
-        return array_merge([
+        return [
             'database', 'broadcast'
-        ]);
+        ];
     }
 }
