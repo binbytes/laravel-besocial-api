@@ -2,6 +2,7 @@
 
 namespace App\Notifications;
 
+use App\Http\Resources\PostUserResource;
 use App\Post;
 use App\User;
 use Illuminate\Bus\Queueable;
@@ -44,7 +45,10 @@ class PostLiked extends Notification implements ShouldQueue
     public function toArray($notifiable)
     {
         return [
-
+            'id' => $this->post->getKey(),
+            'text' => $this->post->text,
+            'likedCount' => $this->post->liker()->count(),
+            'likedBy' => new PostUserResource($this->user)
         ];
     }
 }
