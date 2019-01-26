@@ -14,6 +14,6 @@ class PostLikedListener
      */
     public function handle(PostLiked $event)
     {
-        $event->post->user->notify(new \App\Notifications\PostLiked($event->post, $event->user));
+        $event->post->author->notify(new \App\Notifications\PostLiked($event->post, $event->user));
     }
 }

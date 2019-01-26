@@ -5,9 +5,11 @@ namespace App\Notifications;
 use App\Post;
 use App\User;
 use Illuminate\Bus\Queueable;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Notification;
+use Illuminate\Queue\SerializesModels;
 
-class PostLiked extends Notification
+class PostLiked extends Notification implements ShouldQueue
 {
     use Queueable, Broadcaster, SerializesModels;
 

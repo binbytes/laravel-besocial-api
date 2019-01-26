@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Events\PostLiked;
 use App\Post;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -19,6 +20,8 @@ class LikeController extends Controller
         $post = Post::findOrFail($id);
 
         $request->user()->toggleLike($post);
+
+        event(new PostLiked($post, auth()->user()));
 
         return response()->json([
             'success' => true,
