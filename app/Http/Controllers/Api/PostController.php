@@ -5,10 +5,8 @@ namespace App\Http\Controllers\Api;
 use App\Http\Requests\Api\PostRequest;
 use App\Http\Resources\PostResource;
 use App\Http\Resources\PostResources;
-use App\Http\Resources\UserResource;
 use App\Post;
 use App\Http\Controllers\Controller;
-use App\User;
 
 class PostController extends Controller
 {
@@ -23,7 +21,13 @@ class PostController extends Controller
             ->when($userId, function ($query) use($userId) {
                 return $query->whereUserId($userId);
             })
-            ->latest()
+            ->unless($userId, function ($query) {
+                $query->whereHas('author', function ($query) {
+                    $query->whereHas('followers')
+                        ->orWhere('id', auth()->id());
+                });
+            })
+            ->latest('posts.created_at')
             ->paginate(20);
 
         return new PostResources($posts);
