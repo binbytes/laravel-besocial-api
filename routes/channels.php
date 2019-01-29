@@ -14,3 +14,11 @@
 Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
+
+Broadcast::channel('conversations.{id}', function ($user, $id) {
+    return \App\Conversation::whereId($id)
+            ->whereHas('users', function ($query) use($user) {
+                return $query->id('id', $user->id);
+            })
+            ->exists();
+});

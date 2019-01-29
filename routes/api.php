@@ -40,6 +40,8 @@ Route::namespace('Api')
                 Route::post('users/{user}/follow', 'FollowController@store');
 
                 Route::post('conversations/{user}', 'ConversationController@store');
+                Route::get('conversations/{conversation}', 'ConversationController@show');
+                Route::post('conversations/{conversation}/message', 'ConversationController@sendMessage');
             });
     });
 

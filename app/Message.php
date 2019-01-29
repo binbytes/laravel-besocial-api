@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Events\MessageSent;
 use Illuminate\Database\Eloquent\Model;
 
 class Message extends Model
@@ -47,5 +48,26 @@ class Message extends Model
     public function conversation()
     {
         return $this->belongsTo(Conversation::class);
+    }
+
+    /**
+     * @param \App\Conversation $conversation
+     * @param $body
+     * @param $userId
+     * @param string $type
+     *
+     * @return \Illuminate\Database\Eloquent\Model
+     */
+    public static function send(Conversation $conversation, $body, $userId, $type = 'text')
+    {
+        $message = $conversation->messages()->create([
+            'body' => $body,
+            'user_id' => $userId,
+            'type' => $type,
+        ]);
+
+        event(new MessageSent($conversation));
+
+        return $message;
     }
 }
