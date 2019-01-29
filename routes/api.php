@@ -38,6 +38,8 @@ Route::namespace('Api')
                 Route::post('posts/{id}/like', 'LikeController@store');
 
                 Route::post('users/{user}/follow', 'FollowController@store');
+
+                Route::post('conversations', 'ConversationController@store');
             });
     });
 
