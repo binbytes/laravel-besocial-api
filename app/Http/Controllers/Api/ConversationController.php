@@ -17,6 +17,8 @@ class ConversationController extends Controller
      */
     public function store(User $user)
     {
+        abort_if($user->id == auth()->id(), 403);
+
         $conversation = Conversation::start([
             auth()->id(),
             $user->id
