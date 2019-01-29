@@ -66,7 +66,7 @@ class Message extends Model
             'type' => $type,
         ]);
 
-        event(new MessageSent($conversation));
+        event(new MessageSent($message));
 
         return $message;
     }

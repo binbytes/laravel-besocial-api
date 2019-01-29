@@ -9,6 +9,14 @@ use App\User;
 
 class ConversationController extends Controller
 {
+    public function index()
+    {
+        return response()->json(
+            Conversation::with('messages', 'users')
+            ->forUser()
+            ->get());
+    }
+
     /**
      * Start conversation with
      *

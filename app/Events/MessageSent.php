@@ -2,8 +2,7 @@
 
 namespace App\Events;
 
-use App\Conversation;
-use Illuminate\Broadcasting\Channel;
+use App\Message;
 use Illuminate\Broadcasting\PrivateChannel;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
@@ -16,18 +15,18 @@ class MessageSent implements ShouldQueue, ShouldBroadcast
     use Dispatchable, SerializesModels, Queueable;
 
     /**
-     * @var \App\Conversation
+     * @var \App\Message
      */
-    public $conversation;
+    public $message;
 
     /**
      * Create a new event instance.
      *
      * @return void
      */
-    public function __construct(Conversation $conversation)
+    public function __construct(Message $message)
     {
-        $this->conversation = $conversation;
+        $this->message = $message;
     }
 
     /**
@@ -37,6 +36,6 @@ class MessageSent implements ShouldQueue, ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new PrivateChannel('conversation.' . $this->conversation->id);
+        return new PrivateChannel('conversation.' . $this->message->conversation_id);
     }
 }
