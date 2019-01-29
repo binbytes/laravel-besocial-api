@@ -39,7 +39,7 @@ Route::namespace('Api')
 
                 Route::post('users/{user}/follow', 'FollowController@store');
 
-                Route::post('conversations', 'ConversationController@store');
+                Route::post('conversations/{user}', 'ConversationController@store');
             });
     });
 
