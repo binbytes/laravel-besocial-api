@@ -26,4 +26,17 @@ class UserController extends Controller
                 ->first()
         );
     }
+
+    /**
+     * @param $username
+     *
+     * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     */
+    public function search($username)
+    {
+        return UserResource::collection(
+            User::where('username', 'like', "%$username%")
+                ->get()
+        );
+    }
 }
