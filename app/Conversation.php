@@ -74,11 +74,10 @@ class Conversation extends Model
      */
     public static function firstConversion($participant)
     {
-        return self::whereHas('users', function ($query) use ($participant) {
-            $query->whereIn('id', [
-                auth()->id(),
-                $participant
-            ]);
+        return self::whereHas('users', function ($query) {
+            $query->where('id', auth()->id());
+        })->whereHas('users', function ($query) use ($participant) {
+            $query->where('id', $participant);
         })->first();
     }
 
