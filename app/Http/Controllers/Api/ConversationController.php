@@ -9,12 +9,17 @@ use App\User;
 
 class ConversationController extends Controller
 {
+    /**
+     * @return \Illuminate\Http\JsonResponse
+     */
     public function index()
     {
         return response()->json(
-            Conversation::with('messages', 'users')
-            ->forUser()
-            ->get());
+            Conversation::with('lastMessage', 'users')
+                ->withCount('unreadMessage')
+                ->forUser()
+                ->get()
+        );
     }
 
     /**
@@ -28,10 +33,9 @@ class ConversationController extends Controller
     {
         abort_if($user->id == auth()->id(), 403);
 
-        $conversation = Conversation::start([
-            auth()->id(),
+        $conversation = Conversation::firstOrStart(
             $user->id
-        ]);
+        );
 
         return response()->json($conversation);
     }
@@ -43,6 +47,10 @@ class ConversationController extends Controller
      */
     public function show(Conversation $conversation)
     {
+        $conversation->unreadMessage()->update([
+            'is_seen' => true
+        ]);
+
         return response()->json($conversation->load('messages'));
     }
 

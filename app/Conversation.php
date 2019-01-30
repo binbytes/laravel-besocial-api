@@ -6,6 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Conversation extends Model
 {
+    /**
+     * @var array
+     */
     protected $fillable = [
         'created_by'
     ];
@@ -47,7 +50,7 @@ class Conversation extends Model
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasOne
      */
-    public function last_message()
+    public function lastMessage()
     {
         return $this->hasOne(Message::class)
                     ->orderBy('messages.id', 'desc')
@@ -55,7 +58,50 @@ class Conversation extends Model
     }
 
     /**
-     * @param $participants
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function unreadMessage()
+    {
+        return $this->hasMany(Message::class)
+            ->where('is_seen', false)
+            ->where('user_id', '<>', auth()->id());
+    }
+
+    /**
+     * @param int $participant
+     *
+     * @return mixed
+     */
+    public static function firstConversion($participant)
+    {
+        return self::whereHas('users', function ($query) use ($participant) {
+            $query->whereIn('id', [
+                auth()->id(),
+                $participant
+            ]);
+        })->first();
+    }
+
+
+    /**
+     * @param int $participant
+     *
+     * @return mixed
+     */
+    public static function firstOrStart($participant)
+    {
+        if ($conversation = self::firstConversion($participant)) {
+            return $conversation;
+        }
+
+        return self::start([
+            auth()->id(),
+            $participant
+        ]);
+    }
+
+    /**
+     * @param array $participants
      *
      * @return mixed
      */
