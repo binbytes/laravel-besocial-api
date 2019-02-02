@@ -46,4 +46,15 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->createToken(config('app.name'))->accessToken;
     }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\CgetRecentNotificationsollection|\Illuminate\Support\Collection
+     */
+    public function getRecentNotifications()
+    {
+        return $this->notifications()
+                    ->take(5)
+                    ->latest()
+                    ->get();
+    }
 }

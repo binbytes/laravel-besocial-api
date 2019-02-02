@@ -29,8 +29,9 @@ trait Broadcaster
      */
     public function via($notifiable)
     {
-        return [
-            'database', 'broadcast'
-        ];
+        return array_merge([
+            'database',
+        ], config('passport.broadcast_notification') ? ['broadcast'] : []);
     }
 }
+

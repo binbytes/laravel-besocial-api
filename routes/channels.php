@@ -15,7 +15,7 @@ Broadcast::channel('App.User.{id}', function ($user, $id) {
     return (int) $user->id === (int) $id;
 });
 
-Broadcast::channel('conversations.{id}', function ($user, $id) {
+Broadcast::channel('conversation.{id}', function ($user, $id) {
     return \App\Conversation::whereId($id)
             ->forUser($user->id)
             ->exists();

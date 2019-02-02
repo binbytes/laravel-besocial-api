@@ -44,6 +44,10 @@ Route::namespace('Api')
                 Route::post('conversations/{user}', 'ConversationController@store');
                 Route::get('conversations/{conversation}', 'ConversationController@show');
                 Route::post('conversations/{conversation}/message', 'ConversationController@sendMessage');
+
+                Route::get('/notifications/recent', 'NotificationController@getRecentNotifications');
+                Route::get('/notifications/mark-read/{notificationId}', 'NotificationController@markRead');
+                Route::get('/all-notifications', 'NotificationController@viewAll');
             });
     });
 

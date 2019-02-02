@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Comment;
+use App\Events\PostCommented;
 use App\Http\Requests\Api\CommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Http\Resources\CommentResources;
@@ -38,6 +39,8 @@ class CommentController extends Controller
 
         $comment = $post->comments()
             ->create($request->persist());
+
+        event(new PostCommented($post, auth()->user()));
 
         return new CommentResource($comment);
     }
