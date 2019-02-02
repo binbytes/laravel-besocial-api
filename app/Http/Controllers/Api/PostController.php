@@ -2,11 +2,11 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\PostRequest;
 use App\Http\Resources\PostResource;
 use App\Http\Resources\PostResources;
 use App\Post;
-use App\Http\Controllers\Controller;
 
 class PostController extends Controller
 {
@@ -18,7 +18,7 @@ class PostController extends Controller
     public function index($userId = null)
     {
         $posts = Post::with('author')
-            ->when($userId, function ($query) use($userId) {
+            ->when($userId, function ($query) use ($userId) {
                 return $query->whereUserId($userId);
             })
             ->unless($userId, function ($query) {

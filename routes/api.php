@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,4 +45,3 @@ Route::namespace('Api')
                 Route::post('conversations/{conversation}/message', 'ConversationController@sendMessage');
             });
     });
-

@@ -3,10 +3,10 @@
 namespace App\Http\Controllers\Api;
 
 use App\Comment;
+use App\Http\Controllers\Controller;
 use App\Http\Requests\Api\CommentRequest;
 use App\Http\Resources\CommentResource;
 use App\Http\Resources\CommentResources;
-use App\Http\Controllers\Controller;
 use App\Post;
 
 class CommentController extends Controller

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\PostLiked;
+use App\Http\Controllers\Controller;
 use App\Post;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class LikeController extends Controller
 {
