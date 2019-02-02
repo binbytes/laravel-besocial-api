@@ -22,9 +22,11 @@ class Conversation extends Model
      */
     public function scopeForUser($query, $userId = null)
     {
-        if(!$userId) $userId = auth()->id();
+        if (!$userId) {
+            $userId = auth()->id();
+        }
 
-        return $query->whereHas('users', function ($query) use($userId) {
+        return $query->whereHas('users', function ($query) use ($userId) {
             $query->where('id', $userId);
         });
     }

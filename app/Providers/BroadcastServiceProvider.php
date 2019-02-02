@@ -2,8 +2,8 @@
 
 namespace App\Providers;
 
-use Illuminate\Support\ServiceProvider;
 use Illuminate\Support\Facades\Broadcast;
+use Illuminate\Support\ServiceProvider;
 
 class BroadcastServiceProvider extends ServiceProvider
 {
@@ -14,7 +14,7 @@ class BroadcastServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        if(request()->hasHeader('Authorization')) {
+        if (request()->hasHeader('Authorization')) {
             Broadcast::routes([
                 'prefix' => 'api',
                 'middleware' => ['api', 'auth:api']

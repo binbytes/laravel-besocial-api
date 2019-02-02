@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Resources\UserResource;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserResource;
 use App\User;
+use Illuminate\Http\Request;
 
 class UserController extends Controller
 {
@@ -28,14 +29,23 @@ class UserController extends Controller
     }
 
     /**
-     * @param $username
+     * @param \Illuminate\Http\Request $request
      *
      * @return \Illuminate\Http\Resources\Json\AnonymousResourceCollection
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function search($username)
+    public function search(Request $request)
     {
+        $this->validate($request, [
+            'query' => 'required|string'
+        ]);
+
+        $query = $request->get('query');
+
         return UserResource::collection(
-            User::where('username', 'like', "%$username%")
+            User::where('username', 'like', '%'.$query.'%')
+                ->orWhere('name', 'like', '%'.$query.'%')
+                ->take(10)
                 ->get()
         );
     }

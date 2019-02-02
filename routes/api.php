@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 
 /*
 |--------------------------------------------------------------------------
@@ -29,7 +28,7 @@ Route::namespace('Api')
                     ->name('verification.resend');
 
                 Route::get('user/{by}/{val}', 'UserController@show');
-                Route::get('users/search/{username}', 'UserController@search');
+                Route::post('users/search', 'UserController@search');
 
                 Route::get('posts/{userId?}', 'PostController@index');
                 Route::post('posts', 'PostController@store');
@@ -50,4 +49,3 @@ Route::namespace('Api')
                 Route::get('/all-notifications', 'NotificationController@viewAll');
             });
     });
-

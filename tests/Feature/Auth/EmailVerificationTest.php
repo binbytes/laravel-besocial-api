@@ -112,7 +112,8 @@ class EmailVerificationTest extends TestCase
         $this->getJson('/api/email/resend', [ 'Authorization' => 'Bearer '.$this->getAccessToken($user) ])
             ->assertOk();
 
-        Notification::assertSentTo($user, VerifyEmail::class);;
+        Notification::assertSentTo($user, VerifyEmail::class);
+        ;
     }
 
     /**

@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Events\UserFollowed;
+use App\Http\Controllers\Controller;
 use App\User;
 use Illuminate\Http\Request;
-use App\Http\Controllers\Controller;
 
 class FollowController extends Controller
 {
