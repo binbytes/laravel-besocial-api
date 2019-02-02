@@ -23,12 +23,29 @@ class PostRequest extends FormRequest
      */
     public function rules()
     {
-        return [
+        return array_merge([
             'text' => [
                 'required',
                 'string',
+            ],
+        ], $this->hasMedia() ? [
+            'images' => [
+                'required',
+                'array'
+            ],
+            'images.*' => [
+                'required',
+                'image'
             ]
-        ];
+        ] : []);
+    }
+
+    /**
+     * @return mixed
+     */
+    public function hasMedia()
+    {
+        return $this->file('images');
     }
 
     /**

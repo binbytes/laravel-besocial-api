@@ -4,10 +4,12 @@ namespace App;
 
 use App\Traits\CanLike;
 use Illuminate\Database\Eloquent\Model;
+use Spatie\MediaLibrary\HasMedia\HasMedia;
+use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 
-class Post extends Model
+class Post extends Model implements HasMedia
 {
-    use CanLike;
+    use CanLike, HasMediaTrait;
 
     /**
      * @var array

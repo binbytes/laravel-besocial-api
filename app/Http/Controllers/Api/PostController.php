@@ -44,6 +44,13 @@ class PostController extends Controller
             ->posts()
             ->create($request->persist());
 
+        if ($request->hasMedia()) {
+            $post->addMultipleMediaFromRequest(['images'])
+                ->each(function ($fileAdder) {
+                    $fileAdder->toMediaCollection('images');
+                });
+        }
+
         return new PostResource($post);
     }
 }
