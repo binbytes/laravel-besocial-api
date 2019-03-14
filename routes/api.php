@@ -29,6 +29,7 @@ Route::namespace('Api')
 
                 Route::get('user/{by}/{val}', 'UserController@show');
                 Route::post('users/search', 'UserController@search');
+                Route::post('users/{user}', 'UserController@update');
 
                 Route::get('posts/{userId?}', 'PostController@index');
                 Route::post('posts', 'PostController@store');

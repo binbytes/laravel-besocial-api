@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\UserRequest;
 use App\Http\Resources\UserResource;
 use App\User;
 use Illuminate\Http\Request;
@@ -48,5 +49,28 @@ class UserController extends Controller
                 ->take(10)
                 ->get()
         );
+    }
+
+    /**
+     * @param Request $request
+     * @param User $user
+     * @return UserResource
+     * @throws \Illuminate\Validation\ValidationException
+     */
+    public function update(Request $request, User $user)
+    {
+        $this->validate($request, [
+            'avatar' => 'nullable|image'
+        ]);
+
+        if ($request->hasFile('avatar')) {
+            if (count(auth()->user()->getMedia('avatar')) > 0) {
+                auth()->user()->getMedia('avatar')->first()->delete();
+            }
+
+            auth()->user()->addMediaFromRequest('avatar')->toMediaCollection('avatar');
+        }
+
+        return new UserResource($user);
     }
 }
