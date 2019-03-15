@@ -51,6 +51,6 @@ class Post extends Model implements HasMedia
     public function registerMediaConversions(Media $media = null)
     {
         $this->addMediaConversion('thumb')
-            ->fit(Manipulations::FIT_CONTAIN, 1200, 1200);
+            ->fit(Manipulations::FIT_CONTAIN, 1000, 1000);
     }
 }

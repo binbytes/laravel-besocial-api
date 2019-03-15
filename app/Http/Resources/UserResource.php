@@ -24,8 +24,7 @@ class UserResource extends JsonResource
             'followingCount' => $this->followings()->count(),
             'isFollowing' => auth()->guest() || auth()->id() == $this->id
                 ? null : auth()->user()->isFollowing($this->resource),
-            'avatar' => (count($this->getMedia('avatar')) > 0)
-                ? $this->getMedia('avatar')->first()->getFullUrl() : null,
+            'avatar' => $this->avatar,
         ];
     }
 }

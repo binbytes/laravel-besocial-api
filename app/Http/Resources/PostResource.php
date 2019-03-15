@@ -23,7 +23,7 @@ class PostResource extends JsonResource
             'isLiked' => $request->user() ? $request->user()->hasLiked($this->resource) : false,
             'likedCount' => $this->liker()->count(),
             'images' => $this->getMedia('images')->map(function (Media $image) {
-                return $image->getFullUrl();
+                return $image->getFullUrl('thumb');
             }),
         ];
     }

@@ -23,6 +23,7 @@ class PostRequest extends FormRequest
      */
     public function rules()
     {
+        return[];
         return array_merge([
             'text' => [
                 'required',

@@ -22,11 +22,12 @@ class MessageSent implements ShouldQueue, ShouldBroadcast
     /**
      * Create a new event instance.
      *
-     * @return void
+     * @param Message $message
      */
     public function __construct(Message $message)
     {
         $this->message = $message;
+        $this->message->load('sender');
     }
 
     /**

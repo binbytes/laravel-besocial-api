@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class PostUserResource extends JsonResource
+class ConversationResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,9 +16,10 @@ class PostUserResource extends JsonResource
     {
         return [
             'id' => $this->getKey(),
-            'name' => $this->name,
-            'username' => $this->username,
-            'avatar' => $this->avatar,
+            'last_message' => $this->lastMessage,
+            'unread_message_count' => $this->unread_message_count ?: 0,
+            'users' => ConversationUserResource::collection($this->users),
+            'messages' => MessageResource::collection($this->messages),
         ];
     }
 }

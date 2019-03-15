@@ -6,10 +6,12 @@ use App\Traits\CanLike;
 use App\Traits\CanFollow;
 use Laravel\Passport\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
+use Spatie\Image\Manipulations;
 use Spatie\MediaLibrary\HasMedia\HasMedia;
 use Spatie\MediaLibrary\HasMedia\HasMediaTrait;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Spatie\MediaLibrary\Models\Media;
 
 class User extends Authenticatable implements MustVerifyEmail, HasMedia
 {
@@ -22,6 +24,13 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
      */
     protected $fillable = [
         'name', 'username', 'email', 'password', 'avatar',
+    ];
+
+    /**
+     * @var array
+     */
+    protected $appends = [
+        'avatar',
     ];
 
     /**
@@ -58,5 +67,24 @@ class User extends Authenticatable implements MustVerifyEmail, HasMedia
                     ->take(5)
                     ->latest()
                     ->get();
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getAvatarAttribute()
+    {
+        return (count($this->getMedia('avatar')) > 0)
+            ? $this->getMedia('avatar')->first()->getFullUrl('thumb') : null;
+    }
+
+    /**
+     * @param Media|null $media
+     * @throws \Spatie\Image\Exceptions\InvalidManipulation
+     */
+    public function registerMediaConversions(Media $media = null)
+    {
+        $this->addMediaConversion('thumb')
+            ->fit(Manipulations::FIT_CONTAIN, 100, 100);
     }
 }

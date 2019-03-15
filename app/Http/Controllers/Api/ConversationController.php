@@ -4,22 +4,24 @@ namespace App\Http\Controllers\Api;
 
 use App\Conversation;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ConversationResource;
+use App\Http\Resources\ConversationResources;
 use App\Message;
 use App\User;
 
 class ConversationController extends Controller
 {
     /**
-     * @return \Illuminate\Http\JsonResponse
+     * @return ConversationResources
      */
     public function index()
     {
-        return response()->json(
-            Conversation::with('lastMessage', 'users')
+        $conversations = Conversation::with('lastMessage', 'users')
                 ->withCount('unreadMessage')
                 ->forUser()
-                ->get()
-        );
+                ->get();
+
+        return new ConversationResources($conversations);
     }
 
     /**
@@ -27,7 +29,7 @@ class ConversationController extends Controller
      *
      * @param \App\User $user
      *
-     * @return \App\Http\Resources\UserResource
+     * @return ConversationResource
      */
     public function store(User $user)
     {
@@ -37,7 +39,7 @@ class ConversationController extends Controller
             $user->id
         );
 
-        return response()->json($conversation);
+        return new ConversationResource($conversation);
     }
 
     /**
@@ -51,7 +53,7 @@ class ConversationController extends Controller
             'is_seen' => true
         ]);
 
-        return response()->json($conversation->load('messages'));
+        return response()->json(new ConversationResource($conversation->load('messages')));
     }
 
     /**
