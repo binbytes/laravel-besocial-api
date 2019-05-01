@@ -127,6 +127,6 @@ class LoginController extends Controller
      */
     public function me(Request $request)
     {
-        return new UserResource($request->user());
+        return new UserResource(auth()->user());
     }
 }
